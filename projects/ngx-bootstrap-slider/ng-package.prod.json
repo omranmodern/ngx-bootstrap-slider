@@ -1,8 +1,8 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "allowedNonPeerDependencies": ["bootstrap-slider"],
   "dest": "../../dist/ngx-bootstrap-slider",
   "lib": {
     "entryFile": "src/public_api.ts"
-  },
-  "allowedNonPeerDependencies": ["bootstrap-slider"]
+  }
 }

@@ -11,30 +11,22 @@
       "schematics": {},
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:builder",
           "options": {
+            "aot": true,
             "outputPath": "dist/ngx-bootstrap-slider-app",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "src/tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css",
               "src/styles.css"
             ],
             "scripts": [
               "node_modules/bootstrap-slider/dist/bootstrap-slider.min.js"
-            ],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
+            ]
           },
           "configurations": {
             "production": {
@@ -53,46 +45,49 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
+              "extractCss": true,
               "namedChunks": false,
+              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
             }
-          },
-          "defaultConfiguration": ""
+          }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "ngx-bootstrap-slider-app:build"
+            "browserTarget": "ngx-bootstrap-slider-app:build"
           },
           "configurations": {
             "production": {
-              "buildTarget": "ngx-bootstrap-slider-app:build:production"
+              "browserTarget": "ngx-bootstrap-slider-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "ngx-bootstrap-slider-app:build"
+            "browserTarget": "ngx-bootstrap-slider-app:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
-            "styles": [
-              "src/styles.css"
-            ],
+            "styles": ["src/styles.css"],
             "scripts": [],
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ]
+            "assets": ["src/favicon.ico", "src/assets"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -112,6 +107,13 @@
               "devServerTarget": "ngx-bootstrap-slider-app:serve:production"
             }
           }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**"]
+          }
         }
       }
     },
@@ -129,9 +131,9 @@
           },
           "configurations": {
             "production": {
-              "project": "projects/ngx-bootstrap-slider/ng-package.prod.json"
-            ,              "tsConfig": "projects/ngx-bootstrap-slider/tsconfig.lib.prod.json"
-}
+              "project": "projects/ngx-bootstrap-slider/ng-package.prod.json",
+              "tsConfig": "projects/ngx-bootstrap-slider/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -141,8 +143,19 @@
             "tsConfig": "projects/ngx-bootstrap-slider/tsconfig.spec.json",
             "karmaConfig": "projects/ngx-bootstrap-slider/karma.conf.js"
           }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-bootstrap-slider/tsconfig.lib.json",
+              "projects/ngx-bootstrap-slider/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
         }
       }
     }
-  }
+  },
+  "defaultProject": "ngx-bootstrap-slider-app"
 }
